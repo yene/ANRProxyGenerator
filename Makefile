@@ -2,7 +2,7 @@
 
 BINARY=ANRProxyGenerator
 
-VERSION=v0.0.1
+VERSION=v0.1
 BUILD=`git rev-parse HEAD`
 
 LDFLAGS=-ldflags "-X main.version=${VERSION} -X main.build=${BUILD}"
