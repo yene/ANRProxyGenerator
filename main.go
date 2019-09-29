@@ -15,10 +15,15 @@ var version string
 var build string
 
 // spacing in mm
-var horizontalSpacing = .4
-var verticalSpacing = .4
+var horizontalSpacing = .2
+var verticalSpacing = .2
 var leftMargin = 10
 var topMargin = 10
+
+// Netrunner english cards are 88x61mm
+// Netrunner german cards are 89x63mm
+var cardWidth = 63
+var cardHeight = 89
 
 func main() {
 	if len(os.Args) != 2 {
@@ -47,22 +52,22 @@ func main() {
 	pdf.SetFooterFunc(func() {
 		pdf.SetY(-15)
 		pdf.SetFont("Arial", "", 12)
-		pdf.CellFormat(0, 10, "Generated with https://github.com/yene/ANRProxyGenerator", "", 0, "C", false, 0, "")
+		pdf.CellFormat(0, 10, "Generated with https://github.com/yene/ANRProxyGenerator "+version, "", 0, "C", false, 0, "")
 	})
 
 	for i := 0; i < pages; i++ {
 		pdf.AddPage()
 		for j, card := range chunkSlice(images, i*9, (i+1)*9) {
 			p := filepath.Join(dir, card)
-			// Netrunner cards are exactly 88x61mm
+
 			poscol := j % 3
-			x := float64(leftMargin + (poscol * 61))
+			x := float64(leftMargin + (poscol * cardWidth))
 			x = x + (float64(poscol) * horizontalSpacing)
 
 			posrow := j / 3
-			y := float64(topMargin + (posrow * 88))
+			y := float64(topMargin + (posrow * cardHeight))
 			y = y + (float64(posrow) * verticalSpacing)
-			pdf.ImageOptions(p, float64(x), float64(y), 61, 88, false, opt, 0, "")
+			pdf.ImageOptions(p, float64(x), float64(y), float64(cardWidth), float64(cardHeight), false, opt, 0, "")
 		}
 	}
 
@@ -72,6 +77,7 @@ func main() {
 		log.Fatalln(err)
 	}
 	log.Println("Written PDF to:", outname+".pdf")
+	log.Println("Make sure to print it without scaling.")
 }
 
 func chunkSlice(slice []string, start int, end int) []string {
