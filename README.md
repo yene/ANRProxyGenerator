@@ -12,6 +12,3 @@ Tool to generate printout-ready High Quality images of Android NetRunner cards f
 * https://netrunnerdb.com/en/decklist/3106/starter-deck-corp-beginner-weyland-
 * https://netrunnerdb.com/en/decklist/3107/starter-deck-runner-intermediate
 * https://netrunnerdb.com/en/decklist/3108/starter-deck-corp-intermediate
-
-## Dependencies
-`go get github.com/jung-kurt/gofpdf`
